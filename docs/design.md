@@ -6,6 +6,20 @@ A canvas OS for Awareness data, where the AI is the app builder. The user has a 
 
 This is not a traditional dashboard. There's no widget catalog, no drag-and-drop builder, no configuration UI. The AI understands the data shape (via Awareness tools like `get_stats`, `get_tags`, `get_knowledge`) and generates visualizations that fit the actual data, not a generic template.
 
+## Proof of Concept
+
+The core data pipeline has been proven using Claude Desktop artifacts (March 2026):
+
+**Write artifact** — A React form that submits entries to Awareness through the Anthropic API → Claude → MCP pipeline. Source, tags, content fields with autocomplete from existing store data.
+
+<img src="images/poc-write-artifact.png" alt="Claude Desktop artifact: Awareness Writer form with source, tags, and content fields" width="700">
+
+**Full round-trip confirmed** — Entry written by the artifact, stored in Postgres, read back through a separate Claude instance via MCP. Two different agents, same data, proven pipeline.
+
+<img src="images/poc-roundtrip-confirmed.png" alt="Claude Desktop confirming round-trip: artifact wrote to Awareness, separate read confirmed the entry" width="700">
+
+These prove the fundamental architecture: UI components can read and write Awareness data through the AI layer without a REST API. The canvas generalizes this from single artifacts to a persistent, spatial, multi-widget surface.
+
 ## Architecture
 
 ```
