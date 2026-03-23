@@ -26,32 +26,32 @@ These prove the fundamental architecture: UI components can read and write Aware
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────┐
-│  Browser                                         │
-│                                                   │
-│  ┌─────────────┐  ┌───────────────────────────┐  │
-│  │  Chat Panel  │  │  Canvas                    │  │
-│  │             │  │                             │  │
-│  │  User types │  │  ┌─────────┐ ┌──────────┐  │  │
-│  │  requests   │  │  │ Widget  │ │ Widget   │  │  │
-│  │             │  │  │ (React) │ │ (React)  │  │  │
-│  │  AI responds│  │  └─────────┘ └──────────┘  │  │
-│  │  + generates│  │  ┌──────────────────────┐  │  │
-│  │  widgets    │  │  │ Widget (React)       │  │  │
-│  │             │  │  └──────────────────────┘  │  │
-│  └─────────────┘  └───────────────────────────┘  │
-│                                                   │
-└──────────────────────┬──────────────────────────┘
-                       │
-                       │ Anthropic API
-                       │ (Claude + MCP)
-                       ▼
-              ┌─────────────────┐
-              │  Awareness       │
-              │  (MCP Server)    │
-              │  PostgreSQL      │
-              └─────────────────┘
+```mermaid
+graph TB
+    subgraph Browser
+        subgraph ChatPanel[Chat Panel]
+            User[User types request]
+            AI[AI responds + generates widgets]
+        end
+        subgraph Canvas
+            W1[Widget<br/>React]
+            W2[Widget<br/>React]
+            W3[Widget<br/>React]
+        end
+    end
+
+    subgraph Backend
+        Claude[Claude API<br/>+ MCP Tools]
+        Awareness[Awareness<br/>MCP Server]
+        Postgres[(PostgreSQL)]
+    end
+
+    User -->|natural language| Claude
+    Claude -->|JSX + data| AI
+    AI -->|inject widget| Canvas
+    W1 -.->|refresh query| Claude
+    Claude <-->|MCP tool calls| Awareness
+    Awareness <--> Postgres
 ```
 
 ### Data flow
@@ -119,23 +119,15 @@ The AI can also suggest visualizations: "You have 15 entries tagged 'personal' a
 
 ## Widget lifecycle
 
-```
-User request
-    │
-    ▼
-AI generates JSX + data query
-    │
-    ▼
-Widget registered in canvas state
-    │
-    ▼
-Sandboxed iframe renders component
-    │
-    ├── User drags/resizes → layout state updates
-    ├── User says "update this" → AI regenerates component
-    ├── Widget requests refresh → re-queries through AI pipeline
-    ├── User minimizes → widget collapses to title bar
-    └── User closes → widget removed from state
+```mermaid
+stateDiagram-v2
+    [*] --> Requested: User describes widget
+    Requested --> Generated: AI creates JSX + query
+    Generated --> Rendered: Injected into sandboxed iframe
+    Rendered --> Rendered: Drag / resize / minimize
+    Rendered --> Generated: "Update this" → AI regenerates
+    Rendered --> Rendered: Refresh → re-query through AI
+    Rendered --> [*]: User closes widget
 ```
 
 ## Widget communication protocol
