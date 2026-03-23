@@ -26,36 +26,7 @@ These prove the fundamental architecture: UI components can read and write Aware
 
 ## Architecture
 
-```mermaid
-graph TB
-    subgraph Browser
-        subgraph ChatPanel[Chat Panel]
-            User[User types request]
-            AI[AI responds + generates widgets]
-        end
-        subgraph Canvas
-            W1[Widget<br/>React]
-            W2[Widget<br/>React]
-            W3[Widget<br/>React]
-        end
-    end
-
-    subgraph Cloud[Cloud — Anthropic]
-        Claude[Claude API<br/>+ MCP Tools]
-    end
-
-    subgraph Backend[Backend — Self-hosted]
-        Awareness[Awareness<br/>MCP Server]
-        Postgres[(PostgreSQL)]
-    end
-
-    User -->|natural language| Claude
-    Claude -->|JSX + data| AI
-    AI -->|inject widget| Canvas
-    W1 -.->|refresh query| Claude
-    Claude <-->|MCP tool calls| Awareness
-    Awareness <--> Postgres
-```
+<img src="images/architecture.svg" alt="awareness-canvas architecture: Browser (Chat Panel + Canvas with widgets) → Cloud (Claude API + MCP tools) → Backend (Awareness MCP server + PostgreSQL)" width="700">
 
 ### Data flow
 
