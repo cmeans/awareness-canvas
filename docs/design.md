@@ -18,7 +18,11 @@ The core data pipeline has been proven using Claude Desktop artifacts (March 202
 
 <img src="images/poc-roundtrip-confirmed.png" alt="Claude Desktop confirming round-trip: artifact wrote to Awareness, separate read confirmed the entry" width="700">
 
-These prove the fundamental architecture: UI components can read and write Awareness data through the AI layer without a REST API. The canvas generalizes this from single artifacts to a persistent, spatial, multi-widget surface.
+**Mobile (Claude.ai Android)** — The same Awareness Writer artifact running on a phone. Source dropdown, tag chips, content field, logical key — full write capability from mobile through the same AI pipeline.
+
+<img src="images/poc-android-writer-form.png" alt="Claude.ai Android: Awareness Writer form ready to submit" width="280"> <img src="images/poc-android-writer-writing.png" alt="Claude.ai Android: Writing to awareness in progress" width="280"> <img src="images/poc-android-writer-submitted.png" alt="Claude.ai Android: Entry submitted successfully" width="280">
+
+These prove the fundamental architecture: UI components can read and write Awareness data through the AI layer without a REST API — on desktop and mobile. The canvas generalizes this from single artifacts to a persistent, spatial, multi-widget surface.
 
 ## Architecture
 
