@@ -40,8 +40,11 @@ graph TB
         end
     end
 
-    subgraph Backend
+    subgraph Cloud[Cloud — Anthropic]
         Claude[Claude API<br/>+ MCP Tools]
+    end
+
+    subgraph Backend[Backend — Self-hosted]
         Awareness[Awareness<br/>MCP Server]
         Postgres[(PostgreSQL)]
     end
