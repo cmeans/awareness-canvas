@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/branding/awareness-logo-wordmark.svg" alt="awareness" width="400">
+</p>
+
 # awareness-canvas
 
 > A canvas where your AI builds the dashboard.
@@ -34,7 +38,7 @@ Over time, your canvas becomes your personalized dashboard — not because you c
 
 ## License
 
-[Apache 2.0](LICENSE)
+[AGPL-3.0-or-later](LICENSE)
 
 ---
 
