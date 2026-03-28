@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/branding/awareness-logo-wordmark.svg" alt="awareness" width="400">
+</p>
+
 # awareness-canvas
 
 > A canvas where your AI builds the dashboard.
